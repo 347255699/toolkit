@@ -42,6 +42,7 @@ public class JdbcDriver implements DbDriver<ResultSet> {
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            return false;
         }
         return false;
     }

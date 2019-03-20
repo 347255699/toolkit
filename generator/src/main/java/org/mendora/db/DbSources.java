@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class DbSources {
 
+    public static final String DB_SOURCES = "dbSources";
+
     private String user;
 
     private String password;

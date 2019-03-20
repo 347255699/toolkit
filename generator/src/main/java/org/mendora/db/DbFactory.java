@@ -1,7 +1,5 @@
 package org.mendora.db;
 
-import org.mendora.db.mysql.MysqlTableDesc;
-
 import java.sql.ResultSet;
 
 /**
@@ -18,5 +16,5 @@ public interface DbFactory {
      * @param dbSources 数据源
      * @return 驱动
      */
-    DbDriver<ResultSet, MysqlTableDesc> driver(DbSources dbSources);
+    DbDriver<ResultSet> driver(DbSources dbSources);
 }

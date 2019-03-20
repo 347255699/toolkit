@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * desc: 数据库指导者
  */
 @Slf4j
-public class DbDirector<T> {
+public class DbDirector {
 
     private DbDriver<ResultSet> dbDriver;
 
@@ -39,6 +39,10 @@ public class DbDirector<T> {
 
     public static DbDirector getInstance() {
         return new DbDirector();
+    }
+
+    public boolean test(){
+        return dbDriver.connectTesting();
     }
 
     public List<String> tables() throws Exception {
