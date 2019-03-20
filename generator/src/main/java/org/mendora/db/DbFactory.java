@@ -17,4 +17,6 @@ public interface DbFactory {
      * @return 驱动
      */
     DbDriver<ResultSet> driver(DbSources dbSources);
+
+    TypeConverter typeConverter();
 }

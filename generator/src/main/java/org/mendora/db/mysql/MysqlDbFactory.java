@@ -3,6 +3,7 @@ package org.mendora.db.mysql;
 import org.mendora.db.DbSources;
 import org.mendora.db.DbDriver;
 import org.mendora.db.DbFactory;
+import org.mendora.db.TypeConverter;
 
 import java.sql.ResultSet;
 
@@ -17,5 +18,10 @@ public class MysqlDbFactory implements DbFactory {
     @Override
     public DbDriver<ResultSet> driver(DbSources dbSources) {
         return new JdbcDriver(dbSources);
+    }
+
+    @Override
+    public TypeConverter typeConverter() {
+        return new MysqlTypeConverter();
     }
 }
