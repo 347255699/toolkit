@@ -27,6 +27,7 @@ public class MysqlTypeConverter implements TypeConverter {
 
         INT_TINYINT(int.class, "tinyint"),
         LONG_BIGINT(long.class, "bigint"),
+        INT_INT(int.class, "int"),
         BIG_DECIMAL_DECIMAL(BigDecimal.class, "decimal"),
         STRING_CHAR(String.class, "char"),
         STRING_VARCHAR(String.class, "varchar"),
@@ -47,7 +48,7 @@ public class MysqlTypeConverter implements TypeConverter {
 
         public static Optional<MysqlType> valOf(String sqlType) {
             for (MysqlType mysqlType : values()) {
-                if (mysqlType.sqlType.equals(sqlType) || mysqlType.sqlType.startsWith(sqlType)) {
+                if (mysqlType.sqlType.equals(sqlType) || sqlType.startsWith(mysqlType.sqlType)) {
                     return Optional.of(mysqlType);
                 }
             }

@@ -3,9 +3,8 @@ package org.mendora;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.mendora.config.SysConfig;
-import org.mendora.db.DbDirector;
-import org.mendora.db.DbSources;
-import org.mendora.db.TableDesc;
+import org.mendora.db.*;
+import org.mendora.db.mysql.MysqlDbFactory;
 import org.mendora.util.PathUtil;
 
 import java.io.RandomAccessFile;
@@ -28,6 +27,10 @@ public class MainApplication {
     }
 
     public static void main(String[] args) throws Exception {
+        DbFactory dbFactory = new MysqlDbFactory();
+
+        TypeConverter typeConverter = dbFactory.typeConverter();
+
         final JSONObject config = loadConfig();
         SysConfig.dbSources = config.getJSONArray(DbSources.DB_SOURCES).toJavaList(DbSources.class);
 
@@ -41,6 +44,7 @@ public class MainApplication {
             tableDesc.get(k)
                     .stream()
                     .map(TableDesc::type)
+                    .map(typeConverter::toJavaType)
                     .forEach(System.out::println);
         }
     }
