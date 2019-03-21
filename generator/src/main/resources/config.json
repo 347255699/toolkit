@@ -1,9 +1,10 @@
 {
   "dbSources": [
     {
+      "name": "local",
       "driverClass": "com.mysql.cj.jdbc.Driver",
       "user": "root",
-      "password": "menfre123",
+      "password": "wokoworks002",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": true
     }

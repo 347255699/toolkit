@@ -23,6 +23,7 @@ public interface DbDriver<R> {
      *
      * @param statement 查询语句
      * @return 查询记过
+     * @throws Exception 异常
      */
     R query(String statement) throws Exception;
 
@@ -31,6 +32,7 @@ public interface DbDriver<R> {
      *
      * @param tableName 表名称
      * @return 表字段信息
+     * @throws Exception 异常
      */
     List<TableDesc> showFullColumns(String tableName) throws Exception;
 
@@ -38,6 +40,7 @@ public interface DbDriver<R> {
      * 查询所有表名称
      *
      * @return 表名称
+     * @throws Exception 异常
      */
     List<String> showTables() throws Exception;
 
@@ -47,6 +50,7 @@ public interface DbDriver<R> {
      * @param r      结果集
      * @param tClass 待转换类型
      * @return json格式结果集
+     * @throws Exception 异常
      */
     <T> List<T> parseObject(Class<T> tClass, R r) throws Exception;
 }

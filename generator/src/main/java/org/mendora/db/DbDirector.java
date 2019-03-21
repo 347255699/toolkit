@@ -49,8 +49,7 @@ public class DbDirector {
         return dbDriver.showTables();
     }
 
-    public Map<String, List<TableDesc>> tableDesc() throws Exception {
-        final List<String> tables = tables();
+    public Map<String, List<TableDesc>> tableDesc(List<String> tables) throws Exception {
         final Map<String, List<TableDesc>> tableDescs = new HashMap<>(tables.size());
         tables.forEach(tableName -> {
             try {

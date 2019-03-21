@@ -13,6 +13,9 @@ import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author menfre
+ */
 @Slf4j
 public class MainApplication {
 
@@ -38,8 +41,9 @@ public class MainApplication {
         if (!dbDirector.test()) {
             log.error("connect failed.");
         }
-        System.out.println(dbDirector.tables());
-        Map<String, List<TableDesc>> tableDesc = dbDirector.tableDesc();
+        final List<String> tables = dbDirector.tables();
+        System.out.println();
+        Map<String, List<TableDesc>> tableDesc = dbDirector.tableDesc(tables);
         for (String k : tableDesc.keySet()) {
             tableDesc.get(k)
                     .stream()

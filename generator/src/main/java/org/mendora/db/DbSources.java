@@ -13,6 +13,8 @@ public class DbSources {
 
     public static final String DB_SOURCES = "dbSources";
 
+    private String name;
+
     private String user;
 
     private String password;

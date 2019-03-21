@@ -18,5 +18,10 @@ public interface DbFactory {
      */
     DbDriver<ResultSet> driver(DbSources dbSources);
 
+    /**
+     * 类型转换器
+     *
+     * @return 转换器
+     */
     TypeConverter typeConverter();
 }
