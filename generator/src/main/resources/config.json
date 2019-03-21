@@ -24,7 +24,7 @@
       "superRepoInterface": "com.wokoworks.framework.data.BaseRepository",
       "superRepoImpl": "com.wokoworks.framework.data.BaseRepositoryImpl",
       "primaryKey": "Integer",
-      "typeSpecFactoryName":"org.mendora.generate.pundix.PundixTypeSpecBuilderFactory",
+      "typeSpecFactoryName":"org.mendora.generate.px.PxTypeSpecBuilderFactory",
       "enable": true
     }
   ],
