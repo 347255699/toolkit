@@ -50,6 +50,7 @@ public class PxRepositoryImplTypeSpec extends AbstractRepositoryImplTypeSpec {
                 .addCode("return " + pojoClass[1] + ".class;")
                 .build();
         repoImplBuilder.addMethod(getBeanClassMethod);
+
         MethodSpec getTableName = MethodSpec.methodBuilder("getTableName")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)

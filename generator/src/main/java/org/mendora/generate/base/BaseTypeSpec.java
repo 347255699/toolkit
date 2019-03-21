@@ -44,7 +44,7 @@ public interface BaseTypeSpec {
     }
 
     /**
-     * 添加lombok注解
+     * 添加spring注解
      *
      * @param name lombok注解名称
      * @return 注解描述者
