@@ -51,5 +51,7 @@ public class MainApplication {
 
         // 构造
         generateDirector.constuct();
+
+        log.info("build the java file successfully!");
     }
 }

@@ -1,10 +1,10 @@
-package org.mendora.generate;
+package org.mendora.generate.px;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
-import lombok.Builder;
 import org.mendora.db.mysql.PrimaryKey;
+import org.mendora.generate.base.AbstractRepositoryInterfaceTypeSpec;
 
 import javax.lang.model.element.Modifier;
 
@@ -14,18 +14,7 @@ import javax.lang.model.element.Modifier;
  * date: 2019/3/21
  * desc:
  */
-@Builder
-public class RepositoryInterfaceTypeSpec implements BaseTypeSpec {
-
-    private String interfaceName;
-
-    private String comment;
-
-    private String fullSuperClassName;
-
-    private String fullPojoClassName;
-
-    private String keyType;
+public class PxRepositoryInterfaceTypeSpec extends AbstractRepositoryInterfaceTypeSpec {
 
     @Override
     public TypeSpec generate() {

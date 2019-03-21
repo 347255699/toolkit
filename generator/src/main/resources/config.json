@@ -6,7 +6,7 @@
       "user": "root",
       "password": "wokoworks002",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": true
+      "enable": false
     },
     {
       "name": "home",
@@ -14,7 +14,7 @@
       "user": "root",
       "password": "menfre123",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": false
+      "enable": true
     }
   ],
   "classConfig": [
@@ -24,12 +24,12 @@
       "superRepoInterface": "com.wokoworks.framework.data.BaseRepository",
       "superRepoImpl": "com.wokoworks.framework.data.BaseRepositoryImpl",
       "primaryKey": "Integer",
-      "RepoImplTypeSpec":"org.mendora.generate."
+      "typeSpecFactoryName":"org.mendora.generate.pundix.PundixTypeSpecBuilderFactory",
       "enable": true
     }
   ],
   "table": [
-    "xwallet_special_currency_account_card"
+    "user"
   ],
   "annotationConfig": [
     {
@@ -47,7 +47,7 @@
     {
       "name": "Slf4j",
       "mode": "lombok",
-      "enable": true,
+      "enable": false,
       "sort": 3
     },
     {
@@ -57,5 +57,5 @@
       "sort": 4
     }
   ],
-  "targetPath": "/Users/pundix043/Desktop/generate"
+  "targetPath": "/Users/menfre/Desktop/generate"
 }

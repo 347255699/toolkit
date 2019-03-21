@@ -23,5 +23,7 @@ public class ClassConfig {
 
     private String primaryKey;
 
+    private String typeSpecFactoryName;
+
     private boolean enable;
 }

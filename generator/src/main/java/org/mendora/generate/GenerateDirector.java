@@ -7,6 +7,10 @@ import org.mendora.config.ClassConfig;
 import org.mendora.config.SysConfig;
 import org.mendora.db.DbDirector;
 import org.mendora.db.TableDesc;
+import org.mendora.generate.base.AbstractPojoTypeSpec;
+import org.mendora.generate.base.AbstractRepositoryImplTypeSpec;
+import org.mendora.generate.base.AbstractRepositoryInterfaceTypeSpec;
+import org.mendora.generate.base.TypeSpecFactory;
 import org.mendora.util.StringUtils;
 
 import java.io.IOException;
@@ -32,6 +36,8 @@ public class GenerateDirector {
 
     private List<AnnotationConfig> annotationConfig;
 
+    private TypeSpecFactory typeSpecFactory;
+
     private GenerateDirector(DbDirector dbDirector) {
         this.dbDirector = dbDirector;
         table = SysConfig.table;
@@ -41,6 +47,13 @@ public class GenerateDirector {
                 .filter(ClassConfig::isEnable)
                 .collect(Collectors.toList())
                 .get(0);
+
+        try {
+            Class<?> clazz = Class.forName(classConfig.getTypeSpecFactoryName());
+            typeSpecFactory = (TypeSpecFactory) clazz.newInstance();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     public static GenerateDirector getInstance(DbDirector dbDirector) {
@@ -53,16 +66,15 @@ public class GenerateDirector {
 
     private void buildPojo(List<String> tables, Map<String, List<TableDesc>> tableDescs) {
         tables.stream()
-                .map(t ->
-                        PojoTypeSpec.builder()
-                                .comment("")
-                                .pojoName(pojoClassName(t))
-                                .annotationSpecs(annotationConfig)
-                                .dbDirector(dbDirector)
-                                .tableDescs(tableDescs.get(t))
-                                .build()
-                                .generate()
-                )
+                .map(t -> {
+                    AbstractPojoTypeSpec abstractPojoTypeSpec = typeSpecFactory.pojoTypeSpec();
+                    abstractPojoTypeSpec.setPojoName(pojoClassName(t));
+                    abstractPojoTypeSpec.setAnnotationSpecs(annotationConfig);
+                    abstractPojoTypeSpec.setDbDirector(dbDirector);
+                    abstractPojoTypeSpec.setTableDescs(tableDescs.get(t));
+                    abstractPojoTypeSpec.setComment("");
+                    return abstractPojoTypeSpec.generate();
+                })
                 .map(typeSpec -> JavaFile.builder(classConfig.getBasePackage() + ".vo", typeSpec).build())
                 .forEach(javaFile -> {
                     try {
@@ -75,17 +87,15 @@ public class GenerateDirector {
 
     private void buildRepositoryInterface(List<String> tables) {
         tables.stream()
-                .map(t ->
-                        RepositoryInterfaceTypeSpec
-                                .builder()
-                                .comment("")
-                                .fullSuperClassName(classConfig.getSuperRepoInterface())
-                                .fullPojoClassName(classConfig.getBasePackage() + ".vo." + pojoClassName(t))
-                                .keyType(classConfig.getPrimaryKey())
-                                .interfaceName(pojoClassName(t) + "Repository")
-                                .build()
-                                .generate()
-                )
+                .map(t -> {
+                    AbstractRepositoryInterfaceTypeSpec abstractRepositoryInterfaceTypeSpec = typeSpecFactory.repositoryInterfaceTypeSpec();
+                    abstractRepositoryInterfaceTypeSpec.setComment("");
+                    abstractRepositoryInterfaceTypeSpec.setFullSuperClassName(classConfig.getSuperRepoInterface());
+                    abstractRepositoryInterfaceTypeSpec.setFullPojoClassName(classConfig.getBasePackage() + ".vo." + pojoClassName(t));
+                    abstractRepositoryInterfaceTypeSpec.setKeyType(classConfig.getPrimaryKey());
+                    abstractRepositoryInterfaceTypeSpec.setInterfaceName(pojoClassName(t) + "Repository");
+                    return abstractRepositoryInterfaceTypeSpec.generate();
+                })
                 .map(typeSpec -> JavaFile.builder(classConfig.getBasePackage() + ".repository", typeSpec).build())
                 .forEach(javaFile -> {
                     try {
@@ -98,20 +108,18 @@ public class GenerateDirector {
 
     private void buildRepositoryImpl(List<String> tables) {
         tables.stream()
-                .map(t ->
-                        PundixRepositoryImplTypeSpec
-                                .builder()
-                                .comment("")
-                                .fullSuperClassName(classConfig.getSuperRepoImpl())
-                                .fullPojoClassName(classConfig.getBasePackage() + ".vo." + pojoClassName(t))
-                                .keyType(classConfig.getPrimaryKey())
-                                .fullSuperInterfaceName(classConfig.getBasePackage() + ".repository." + pojoClassName(t) + "Repository")
-                                .implName(pojoClassName(t) + "RepositoryImpl")
-                                .annotationSpecs(annotationConfig)
-                                .table(t)
-                                .build()
-                                .generate()
-                )
+                .map(t -> {
+                    AbstractRepositoryImplTypeSpec abstractRepositoryImplTypeSpec = typeSpecFactory.repositoryImplTypeSpec();
+                    abstractRepositoryImplTypeSpec.setComment("");
+                    abstractRepositoryImplTypeSpec.setFullSuperClassName(classConfig.getSuperRepoImpl());
+                    abstractRepositoryImplTypeSpec.setFullPojoClassName(classConfig.getBasePackage() + ".vo." + pojoClassName(t));
+                    abstractRepositoryImplTypeSpec.setKeyType(classConfig.getPrimaryKey());
+                    abstractRepositoryImplTypeSpec.setFullSuperInterfaceName(classConfig.getBasePackage() + ".repository." + pojoClassName(t) + "Repository");
+                    abstractRepositoryImplTypeSpec.setImplName(pojoClassName(t) + "RepositoryImpl");
+                    abstractRepositoryImplTypeSpec.setAnnotationSpecs(annotationConfig);
+                    abstractRepositoryImplTypeSpec.setTable(t);
+                    return abstractRepositoryImplTypeSpec.generate();
+                })
                 .map(typeSpec -> JavaFile.builder(classConfig.getBasePackage() + ".repository.impl", typeSpec).build())
                 .forEach(javaFile -> {
                     try {

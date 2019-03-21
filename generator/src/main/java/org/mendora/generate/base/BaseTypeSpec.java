@@ -1,4 +1,4 @@
-package org.mendora.generate;
+package org.mendora.generate.base;
 
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -16,13 +16,6 @@ public interface BaseTypeSpec {
     String LOMBOK_PACKAGE = "lombok";
     String LOMBOK_EXTERN_SLF4J_PACKAGE = "lombok.extern.slf4j";
     String SLF4J = "Slf4j";
-
-    /**
-     * 生成类描述
-     *
-     * @return 类描述
-     */
-    TypeSpec generate();
 
     /**
      * 添加注释
