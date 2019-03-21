@@ -5,7 +5,7 @@ import org.mendora.generate.base.AbstractRepositoryImplTypeSpec;
 import org.mendora.generate.base.AbstractRepositoryInterfaceTypeSpec;
 import org.mendora.generate.base.TypeSpecFactory;
 
-public class PxTypeSpecBuilderFactory implements TypeSpecFactory {
+public class PxTypeSpecFactory implements TypeSpecFactory {
 
     @Override
     public AbstractPojoTypeSpec pojoTypeSpec() {
