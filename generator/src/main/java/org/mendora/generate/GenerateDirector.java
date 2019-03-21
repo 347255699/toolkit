@@ -99,7 +99,7 @@ public class GenerateDirector {
     private void buildRepositoryImpl(List<String> tables) {
         tables.stream()
                 .map(t ->
-                        RepositoryImplTypeSpec
+                        PundixRepositoryImplTypeSpec
                                 .builder()
                                 .comment("")
                                 .fullSuperClassName(classConfig.getSuperRepoImpl())
@@ -107,6 +107,7 @@ public class GenerateDirector {
                                 .keyType(classConfig.getPrimaryKey())
                                 .fullSuperInterfaceName(classConfig.getBasePackage() + ".repository." + pojoClassName(t) + "Repository")
                                 .implName(pojoClassName(t) + "RepositoryImpl")
+                                .annotationSpecs(annotationConfig)
                                 .table(t)
                                 .build()
                                 .generate()

@@ -3,7 +3,6 @@ package org.mendora.generate;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
-import org.mendora.lombok.LombokAnnotation;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +15,7 @@ import java.time.LocalDateTime;
 public interface BaseTypeSpec {
     String LOMBOK_PACKAGE = "lombok";
     String LOMBOK_EXTERN_SLF4J_PACKAGE = "lombok.extern.slf4j";
+    String SLF4J = "Slf4j";
 
     /**
      * 生成类描述
@@ -45,8 +45,19 @@ public interface BaseTypeSpec {
      * @return 注解描述者
      */
     default AnnotationSpec lombok(String name) {
-        String packageName = LombokAnnotation.SLF4J.equals(name) ? LOMBOK_EXTERN_SLF4J_PACKAGE : LOMBOK_PACKAGE;
+        String packageName = name.equals(SLF4J) ? LOMBOK_EXTERN_SLF4J_PACKAGE : LOMBOK_PACKAGE;
         return AnnotationSpec.builder(ClassName.get(packageName, name))
+                .build();
+    }
+
+    /**
+     * 添加lombok注解
+     *
+     * @param name lombok注解名称
+     * @return 注解描述者
+     */
+    default AnnotationSpec spring(String name) {
+        return AnnotationSpec.builder(ClassName.get("org.springframework.stereotype", name))
                 .build();
     }
 
