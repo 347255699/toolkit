@@ -13,5 +13,18 @@ import java.util.List;
  */
 @Data
 public class SysConfig {
+
+    public static final String TABLE = "table";
+
+    public static final String TARGET_PATH = "targetPath";
+
     public static List<DbSources> dbSources;
+
+    public static List<String> table;
+
+    public static List<ClassConfig> classConfig;
+
+    public static List<AnnotationConfig> annotationConfig;
+
+    public static String targetPath;
 }

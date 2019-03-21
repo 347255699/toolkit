@@ -7,6 +7,48 @@
       "password": "wokoworks002",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": true
+    },
+    {
+      "name": "home",
+      "driverClass": "com.mysql.cj.jdbc.Driver",
+      "user": "root",
+      "password": "menfre123",
+      "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
+      "enable": false
     }
-  ]
+  ],
+  "classConfig": [
+    {
+      "name": "pundix",
+      "basePackage": "com.wokoworks",
+      "superRepoInterface": "com.wokoworks.framework.data.BaseRepository",
+      "superRepoImpl": "com.wokoworks.framework.data.BaseRepositoryImpl",
+      "primaryKey": "Integer",
+      "enable": true
+    }
+  ],
+  "table": [
+    "xwallet_special_currency_account_card"
+  ],
+  "annotationConfig": [
+    {
+      "name": "Builder",
+      "mode": "lombok",
+      "enable": true,
+      "sort": 1
+    },
+    {
+      "name": "Data",
+      "mode": "lombok",
+      "enable": true,
+      "sort": 2
+    },
+    {
+      "name": "Slf4j",
+      "mode": "lombok",
+      "enable": true,
+      "sort": 3
+    }
+  ],
+  "targetPath":"/Users/pundix043/Desktop/generate"
 }
