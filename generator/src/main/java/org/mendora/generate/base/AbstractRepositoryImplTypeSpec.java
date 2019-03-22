@@ -6,6 +6,9 @@ import org.mendora.config.AnnotationConfig;
 
 import java.util.List;
 
+/**
+ * @author menfre
+ */
 @Data
 public abstract class AbstractRepositoryImplTypeSpec implements BaseTypeSpec {
 

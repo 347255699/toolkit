@@ -21,10 +21,12 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
     private static String MODE = "pojo";
 
     private void buildEnum(TableDesc td, TypeSpec.Builder pojoBuilder) {
-        String enumName0 = StringUtils.lineToHump(td.field());
-        String enumName = StringUtils.firstLetterToUpperCase(enumName0);
+        // 枚举名称
+        String lowerCaseEnumName = StringUtils.lineToHump(td.field());
+        String upperCaseEnumName = StringUtils.firstLetterToUpperCase(lowerCaseEnumName);
+
         // 构造枚举
-        TypeSpec.Builder enumBuilder = TypeSpec.enumBuilder(enumName)
+        TypeSpec.Builder enumBuilder = TypeSpec.enumBuilder(upperCaseEnumName)
                 .addModifiers(Modifier.PUBLIC)
                 .addField(int.class, "val", Modifier.PUBLIC, Modifier.FINAL)
                 .addField(String.class, "msg", Modifier.PUBLIC, Modifier.FINAL)
@@ -35,12 +37,16 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
                         .addStatement("this.$N = $N", "msg", "msg")
                         .build());
 
+        /**
+         * 提取注释
+         */
         String comment = td.comment();
         int index = comment.indexOf("(");
         String substring = comment.substring(index + 1, comment.length() - 1);
         comment = comment.substring(0, index);
         String[] status = substring.split("\\|");
 
+        // 添加枚举静态成员
         for (int i = 0; i < status.length; i++) {
             String[] str = status[i].split(":");
             String name = str[0].trim();
@@ -53,19 +59,21 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
             enumBuilder.addEnumConstant(name, builder.build());
         }
 
-        ParameterizedTypeName returnType = ParameterizedTypeName.get(ClassName.get("java.util", "Optional"), ClassName.get("", enumName));
+        // 添加静态方法
+        ParameterizedTypeName returnType = ParameterizedTypeName.get(ClassName.get("java.util", "Optional"), ClassName.get("", upperCaseEnumName));
         MethodSpec methodSpec = MethodSpec.methodBuilder("valOf").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(ParameterSpec.builder(int.class, "val").build())
                 .returns(returnType)
-                .addCode("\tfor ($N $N : values()){\n", enumName, enumName0)
-                .addCode("\t\tif(val == $N.val){\n", enumName0)
-                .addStatement("\t\t\treturn Optional.of($N)", enumName0)
+                .addCode("\tfor ($N $N : values()){\n", upperCaseEnumName, upperCaseEnumName)
+                .addCode("\t\tif(val == $N.val){\n", upperCaseEnumName)
+                .addStatement("\t\t\treturn Optional.of($N)", upperCaseEnumName)
                 .addCode("\t\t}\n")
                 .addCode("\t}\n")
                 .addStatement("\treturn Optional.empty()")
                 .build();
         enumBuilder.addMethod(methodSpec);
 
+        // 构造内部枚举
         pojoBuilder.addType(enumBuilder.build());
     }
 

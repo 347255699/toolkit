@@ -8,6 +8,9 @@ import org.mendora.db.TableDesc;
 
 import java.util.List;
 
+/**
+ * @author menfre
+ */
 @Data
 public abstract class AbstractPojoTypeSpec implements BaseTypeSpec {
 

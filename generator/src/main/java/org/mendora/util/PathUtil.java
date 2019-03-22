@@ -2,6 +2,7 @@ package org.mendora.util;
 
 /**
  * 路径工具
+ * @author menfre
  */
 public class PathUtil {
     /**
