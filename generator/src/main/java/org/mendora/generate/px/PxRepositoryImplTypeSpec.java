@@ -16,6 +16,8 @@ import java.util.Comparator;
  */
 public class PxRepositoryImplTypeSpec extends AbstractRepositoryImplTypeSpec {
 
+    public static String MODE = "repoImpl";
+
     @Override
     public TypeSpec generate() {
         final String[] superInterface = separateFullClassName(fullSuperInterfaceName);
@@ -61,7 +63,7 @@ public class PxRepositoryImplTypeSpec extends AbstractRepositoryImplTypeSpec {
 
         annotationSpecs.stream()
                 .sorted(Comparator.comparing(AnnotationConfig::getSort))
-                .filter(item -> "spring".equals(item.getMode()))
+                .filter(item -> MODE.equals(item.getMode()))
                 .filter(AnnotationConfig::isEnable)
                 .map(item -> spring(item.getName()))
                 .forEach(repoImplBuilder::addAnnotation);

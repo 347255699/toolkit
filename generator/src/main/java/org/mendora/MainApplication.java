@@ -37,6 +37,7 @@ public class MainApplication {
         SysConfig.annotationConfig = config.getJSONArray(AnnotationConfig.ANNOTATION_CONFIG).toJavaList(AnnotationConfig.class);
         SysConfig.table = config.getJSONArray(SysConfig.TABLE).toJavaList(String.class);
         SysConfig.targetPath = config.getString(SysConfig.TARGET_PATH);
+        SysConfig.statusKeyword = config.getJSONArray(SysConfig.STATUS_KEYWORD).toJavaList(String.class);
     }
 
     public static void main(String[] args) throws Exception {

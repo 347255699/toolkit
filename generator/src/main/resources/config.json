@@ -6,7 +6,7 @@
       "user": "root",
       "password": "wokoworks002",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": false
+      "enable": true
     },
     {
       "name": "home",
@@ -14,7 +14,7 @@
       "user": "root",
       "password": "menfre123",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": true
+      "enable": false
     }
   ],
   "classConfig": [
@@ -24,38 +24,46 @@
       "superRepoInterface": "com.wokoworks.framework.data.BaseRepository",
       "superRepoImpl": "com.wokoworks.framework.data.BaseRepositoryImpl",
       "primaryKey": "Integer",
-      "typeSpecFactoryName":"org.mendora.generate.px.PxTypeSpecBuilderFactory",
+      "typeSpecFactoryName": "org.mendora.generate.px.PxTypeSpecFactory",
       "enable": true
     }
   ],
   "table": [
-    "user"
+    "merchant_special_currency_charge_fee_config"
   ],
   "annotationConfig": [
     {
       "name": "Builder",
-      "mode": "lombok",
+      "mode": "pojo",
+      "type": "lombok",
       "enable": true,
       "sort": 1
     },
     {
       "name": "Data",
-      "mode": "lombok",
+      "mode": "pojo",
+      "type": "lombok",
       "enable": true,
       "sort": 2
     },
     {
       "name": "Slf4j",
-      "mode": "lombok",
+      "mode": "pojo",
+      "type": "lombok",
       "enable": false,
       "sort": 3
     },
     {
       "name": "Repository",
-      "mode": "spring",
+      "mode": "repoImpl",
+      "type": "spring",
       "enable": true,
       "sort": 4
     }
   ],
-  "targetPath": "/Users/menfre/Desktop/generate"
+  "statusKeyword": [
+    "type",
+    "status"
+  ],
+  "targetPath": "/Users/pundix043/Desktop/generate"
 }

@@ -2,13 +2,13 @@ package org.mendora.generate.px;
 
 import com.squareup.javapoet.*;
 import org.mendora.config.AnnotationConfig;
+import org.mendora.config.SysConfig;
 import org.mendora.db.TableDesc;
 import org.mendora.generate.base.AbstractPojoTypeSpec;
 import org.mendora.util.StringUtils;
 
 import javax.lang.model.element.Modifier;
 import java.util.Comparator;
-import java.util.Optional;
 
 /**
  * @author menfre
@@ -17,6 +17,8 @@ import java.util.Optional;
  * desc:
  */
 public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
+
+    private static String MODE = "pojo";
 
     private void buildEnum(TableDesc td, TypeSpec.Builder pojoBuilder) {
         String enumName0 = StringUtils.lineToHump(td.field());
@@ -51,12 +53,12 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
             enumBuilder.addEnumConstant(name, builder.build());
         }
 
-        ParameterizedTypeName returnType = ParameterizedTypeName.get(Optional.class, enumBuilder.build().getClass());
+        ParameterizedTypeName returnType = ParameterizedTypeName.get(ClassName.get("java.util", "Optional"), ClassName.get("", enumName));
         MethodSpec methodSpec = MethodSpec.methodBuilder("valOf").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(ParameterSpec.builder(int.class, "val").build())
                 .returns(returnType)
                 .addCode("\tfor ($N $N : values()){\n", enumName, enumName0)
-                .addCode("\t\tif(val == status.val){\n")
+                .addCode("\t\tif(val == $N.val){\n", enumName0)
                 .addStatement("\t\t\treturn Optional.of($N)", enumName0)
                 .addCode("\t\t}\n")
                 .addCode("\t}\n")
@@ -79,15 +81,17 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
 
             pojoBuilder.addField(fieldBuilder.build());
 
-            if ("status".contains(td.field()) || "Status".contains(td.field()) ||
-                    "type".contains(td.field()) || "Type".contains(td.field())) {
-                buildEnum(td, pojoBuilder);
-            }
+            SysConfig.statusKeyword.forEach(keyword -> {
+                String keyword0 = StringUtils.firstLetterToUpperCase(keyword);
+                if (td.field().equals(keyword) || td.field().contains(keyword0)) {
+                    buildEnum(td, pojoBuilder);
+                }
+            });
         });
 
         annotationSpecs.stream()
                 .sorted(Comparator.comparing(AnnotationConfig::getSort))
-                .filter(item -> "lombok".equals(item.getMode()))
+                .filter(item -> MODE.equals(item.getMode()))
                 .filter(AnnotationConfig::isEnable)
                 .map(item -> lombok(item.getName()))
                 .forEach(pojoBuilder::addAnnotation);

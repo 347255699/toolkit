@@ -17,6 +17,8 @@ public class AnnotationConfig {
 
     private String mode;
 
+    private String type;
+
     private boolean enable;
 
     private int sort;
