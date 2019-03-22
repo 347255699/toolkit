@@ -22,7 +22,7 @@
       "name": "pundix",
       "basePackage": "com.wokoworks",
       "superRepoInterface": "com.wokoworks.framework.data.BaseRepository",
-      "superRepoImpl": "com.wokoworks.framework.data.BaseRepositoryImpl",
+      "superRepoImpl": "com.wokoworks.framework.data.impl.BaseRepositoryImpl",
       "primaryKey": "Integer",
       "typeSpecFactoryName": "org.mendora.generate.px.PxTypeSpecFactory",
       "enable": true
