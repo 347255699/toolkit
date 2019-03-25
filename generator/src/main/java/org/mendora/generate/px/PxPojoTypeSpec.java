@@ -56,7 +56,7 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
             if (0 == i) {
                 builder.addJavadoc(comment);
             }
-            enumBuilder.addEnumConstant(name, builder.build());
+            enumBuilder.addEnumConstant(name.toUpperCase(), builder.build());
         }
 
         // 添加静态方法

@@ -48,7 +48,7 @@
     },
     {
       "name": "Slf4j",
-      "mode": "pojo",
+      "mode": "repoImpl",
       "type": "lombok",
       "enable": false,
       "sort": 3
