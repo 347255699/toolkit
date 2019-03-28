@@ -64,9 +64,9 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
         MethodSpec methodSpec = MethodSpec.methodBuilder("valOf").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(ParameterSpec.builder(int.class, "val").build())
                 .returns(returnType)
-                .addCode("\tfor ($N $N : values()){\n", upperCaseEnumName, upperCaseEnumName)
-                .addCode("\t\tif(val == $N.val){\n", upperCaseEnumName)
-                .addStatement("\t\t\treturn Optional.of($N)", upperCaseEnumName)
+                .addCode("\tfor ($N $N : values()){\n", upperCaseEnumName, lowerCaseEnumName)
+                .addCode("\t\tif(val == $N.val){\n", lowerCaseEnumName)
+                .addStatement("\t\t\treturn Optional.of($N)", lowerCaseEnumName)
                 .addCode("\t\t}\n")
                 .addCode("\t}\n")
                 .addStatement("\treturn Optional.empty()")
@@ -90,8 +90,9 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
             pojoBuilder.addField(fieldBuilder.build());
 
             SysConfig.statusKeyword.forEach(keyword -> {
+                String javaField = StringUtils.lineToHump(td.field());
                 String keyword0 = StringUtils.firstLetterToUpperCase(keyword);
-                if (td.field().equals(keyword) || td.field().contains(keyword0)) {
+                if (javaField.equals(keyword) || javaField.contains(keyword0)) {
                     buildEnum(td, pojoBuilder);
                 }
             });
