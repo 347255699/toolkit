@@ -14,7 +14,7 @@
       "user": "root",
       "password": "menfre123",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": false
+      "enable": true
     },
     {
       "name": "pundix-service-platform",
@@ -22,7 +22,7 @@
       "user": "root",
       "password": "wokoworks",
       "url": "jdbc:mysql://192.168.21.61:3306/pundix_service_platform?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": true
+      "enable": false
     }
   ],
   "classConfig": [
@@ -37,8 +37,7 @@
     }
   ],
   "table": [
-    "currency",
-    "platform"
+    "user"
   ],
   "annotationConfig": [
     {
@@ -74,5 +73,5 @@
     "type",
     "status"
   ],
-  "targetPath": "/Users/pundix043/workbench/copy/pundix-service-platform/pundix-service-platform-server/src/main/java"
+  "targetPath": "/Users/menfre/Desktop/generate"
 }

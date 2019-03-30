@@ -77,6 +77,14 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
         pojoBuilder.addType(enumBuilder.build());
     }
 
+    // 构建表字段信息
+    private void buildTableField(TableDesc td, TypeSpec.Builder pojoBuilder) {
+        FieldSpec.Builder fieldBuilder = FieldSpec.builder(String.class, "TF_" + td.field().toUpperCase())
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .initializer("\"" + td.field() + "\"");
+        pojoBuilder.addField(fieldBuilder.build());
+    }
+
     @Override
     public TypeSpec generate() {
         TypeSpec.Builder pojoBuilder = TypeSpec.classBuilder(pojoName)
@@ -88,6 +96,7 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
                     .addJavadoc(td.comment());
 
             pojoBuilder.addField(fieldBuilder.build());
+            buildTableField(td, pojoBuilder);
 
             SysConfig.statusKeyword.forEach(keyword -> {
                 String javaField = StringUtils.lineToHump(td.field());
