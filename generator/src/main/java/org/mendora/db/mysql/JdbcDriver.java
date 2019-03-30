@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.mendora.db.DbSources;
 import org.mendora.db.DbDriver;
 import org.mendora.db.TableDesc;
-import org.mendora.util.BeanUtils;
-import org.mendora.util.StringUtils;
+import org.mendora.util.BeanUtil;
+import org.mendora.util.StringUtil;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -82,7 +82,7 @@ public class JdbcDriver implements DbDriver<ResultSet> {
             while (rs.next()) {
                 final T t = tClass.newInstance();
                 // 填充
-                BeanUtils.filling(t, k -> rs.getString(StringUtils.firstLetterToUpperCase(k)));
+                BeanUtil.filling(t, k -> rs.getString(StringUtil.firstLetterToUpperCase(k)));
                 objs.add(t);
             }
         }

@@ -5,7 +5,7 @@ import org.mendora.config.AnnotationConfig;
 import org.mendora.config.SysConfig;
 import org.mendora.db.TableDesc;
 import org.mendora.generate.base.AbstractPojoTypeSpec;
-import org.mendora.util.StringUtils;
+import org.mendora.util.StringUtil;
 
 import javax.lang.model.element.Modifier;
 import java.util.Comparator;
@@ -22,8 +22,8 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
 
     private void buildEnum(TableDesc td, TypeSpec.Builder pojoBuilder) {
         // 枚举名称
-        String lowerCaseEnumName = StringUtils.lineToHump(td.field());
-        String upperCaseEnumName = StringUtils.firstLetterToUpperCase(lowerCaseEnumName);
+        String lowerCaseEnumName = StringUtil.lineToHump(td.field());
+        String upperCaseEnumName = StringUtil.firstLetterToUpperCase(lowerCaseEnumName);
 
         // 构造枚举
         TypeSpec.Builder enumBuilder = TypeSpec.enumBuilder(upperCaseEnumName)
@@ -91,7 +91,7 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
                 .addModifiers(Modifier.PUBLIC);
 
         tableDescs.forEach(td -> {
-            FieldSpec.Builder fieldBuilder = FieldSpec.builder(dbDirector.toJavaType(td.type()), StringUtils.lineToHump(td.field()))
+            FieldSpec.Builder fieldBuilder = FieldSpec.builder(dbDirector.toJavaType(td.type()), StringUtil.lineToHump(td.field()))
                     .addModifiers(Modifier.PRIVATE)
                     .addJavadoc(td.comment());
 
@@ -99,8 +99,8 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
             buildTableField(td, pojoBuilder);
 
             SysConfig.statusKeyword.forEach(keyword -> {
-                String javaField = StringUtils.lineToHump(td.field());
-                String keyword0 = StringUtils.firstLetterToUpperCase(keyword);
+                String javaField = StringUtil.lineToHump(td.field());
+                String keyword0 = StringUtil.firstLetterToUpperCase(keyword);
                 if (javaField.equals(keyword) || javaField.contains(keyword0)) {
                     buildEnum(td, pojoBuilder);
                 }
