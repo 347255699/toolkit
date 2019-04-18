@@ -25,7 +25,7 @@ public class MainApplication {
     private static void loadConfig() throws Exception {
         RandomAccessFile file = new RandomAccessFile(PathUtil.root() + DEFAULT_FILE, "r");
         FileChannel channel = file.getChannel();
-        ByteBuffer bb = ByteBuffer.allocate(2048);
+        ByteBuffer bb = ByteBuffer.allocate(4096);
         channel.read(bb);
         JSONObject config = JSONObject.parseObject(new String(bb.array()));
 

@@ -22,13 +22,21 @@
       "user": "root",
       "password": "wokoworks",
       "url": "jdbc:mysql://192.168.21.61:3306/pundix_service_platform?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
+      "enable": false
+    },
+    {
+      "name": "pundix-service-mining",
+      "driverClass": "com.mysql.cj.jdbc.Driver",
+      "user": "root",
+      "password": "wokoworks002",
+      "url": "jdbc:mysql://localhost:3306/pundix_service_mining?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": true
     }
   ],
   "classConfig": [
     {
       "name": "pundix",
-      "basePackage": "com.wokoworks.platform.server",
+      "basePackage": "com.wokoworks",
       "superRepoInterface": "com.wokoworks.framework.data.BaseRepository",
       "superRepoImpl": "com.wokoworks.framework.data.impl.BaseRepositoryImpl",
       "primaryKey": "Integer",
@@ -37,15 +45,16 @@
     }
   ],
   "table": [
-    "currency",
-    "platform"
+    "system_nem_address",
+    "mining_user_nem_bill_recharge",
+    "mining_user_nem_message_relation"
   ],
   "annotationConfig": [
     {
       "name": "Builder",
       "mode": "pojo",
       "type": "lombok",
-      "enable": true,
+      "enable": false,
       "sort": 1
     },
     {
@@ -74,5 +83,5 @@
     "type",
     "status"
   ],
-  "targetPath": "/Users/pundix043/workbench/copy/pundix-service-platform/pundix-service-platform-server/src/main/java"
+  "targetPath": "/Users/pundix043/workbench/pundix-service-mining/pundix-service-mining-server/src/main/java"
 }
