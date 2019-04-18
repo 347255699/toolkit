@@ -14,7 +14,7 @@
       "user": "root",
       "password": "menfre123",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": false
+      "enable": true
     },
     {
       "name": "pundix-service-platform",
@@ -45,9 +45,7 @@
     }
   ],
   "table": [
-    "system_nem_address",
-    "mining_user_nem_bill_recharge",
-    "mining_user_nem_message_relation"
+    "user"
   ],
   "annotationConfig": [
     {
@@ -83,5 +81,5 @@
     "type",
     "status"
   ],
-  "targetPath": "/Users/pundix043/workbench/pundix-service-mining/pundix-service-mining-server/src/main/java"
+  "targetPath": "/Users/menfre/Desktop/generate"
 }

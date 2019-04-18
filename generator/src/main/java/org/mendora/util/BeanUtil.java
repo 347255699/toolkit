@@ -14,7 +14,7 @@ import java.util.Arrays;
  * desc:
  */
 @Slf4j
-public class BeanUtils {
+public class BeanUtil {
     private static final String FIELD_CLASS = "class";
 
     /**

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * date: 2018/9/27
  * desc: 字符串工具
  */
-public class StringUtils {
+public class StringUtil {
     private static Pattern linePattern = Pattern.compile("_(\\w)");
 
     /**
