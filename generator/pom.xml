@@ -19,6 +19,12 @@
             <version>${mendora.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mendora</groupId>
+            <artifactId>logger</artifactId>
+            <version>${mendora.version}</version>
+        </dependency>
+
         <!-- tools -->
         <dependency>
             <groupId>com.squareup</groupId>

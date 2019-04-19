@@ -1,0 +1,47 @@
+[DEBUG] 2019-04-19 18:57:46.280 [main] InternalLoggerFactory - Using SLF4J as the default logging framework
+[DEBUG] 2019-04-19 18:57:46.288 [main] ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+[DEBUG] 2019-04-19 18:57:46.288 [main] ResourceLeakDetector - -Dio.netty.leakDetection.targetRecords: 4
+[DEBUG] 2019-04-19 18:57:46.320 [main] MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 8
+[DEBUG] 2019-04-19 18:57:46.383 [main] NioEventLoop - -Dio.netty.noKeySetOptimization: false
+[DEBUG] 2019-04-19 18:57:46.383 [main] NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+[DEBUG] 2019-04-19 18:57:46.408 [main] PlatformDependent - Platform: MacOS
+[DEBUG] 2019-04-19 18:57:46.410 [main] PlatformDependent0 - -Dio.netty.noUnsafe: false
+[DEBUG] 2019-04-19 18:57:46.410 [main] PlatformDependent0 - Java version: 8
+[DEBUG] 2019-04-19 18:57:46.412 [main] PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+[DEBUG] 2019-04-19 18:57:46.413 [main] PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+[DEBUG] 2019-04-19 18:57:46.414 [main] PlatformDependent0 - java.nio.Buffer.address: available
+[DEBUG] 2019-04-19 18:57:46.415 [main] PlatformDependent0 - direct buffer constructor: available
+[DEBUG] 2019-04-19 18:57:46.416 [main] PlatformDependent0 - java.nio.Bits.unaligned: available, true
+[DEBUG] 2019-04-19 18:57:46.417 [main] PlatformDependent0 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+[DEBUG] 2019-04-19 18:57:46.417 [main] PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+[DEBUG] 2019-04-19 18:57:46.417 [main] PlatformDependent - sun.misc.Unsafe: available
+[DEBUG] 2019-04-19 18:57:46.418 [main] PlatformDependent - -Dio.netty.tmpdir: /var/folders/9c/1d8sgvr96h9d6_x01y4v24xh0000gn/T (java.io.tmpdir)
+[DEBUG] 2019-04-19 18:57:46.418 [main] PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+[DEBUG] 2019-04-19 18:57:46.419 [main] PlatformDependent - -Dio.netty.maxDirectMemory: 1908932608 bytes
+[DEBUG] 2019-04-19 18:57:46.420 [main] PlatformDependent - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+[DEBUG] 2019-04-19 18:57:46.422 [main] CleanerJava6 - java.nio.ByteBuffer.cleaner(): available
+[DEBUG] 2019-04-19 18:57:46.423 [main] PlatformDependent - -Dio.netty.noPreferDirect: false
+[DEBUG] 2019-04-19 18:57:46.435 [main] PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+[DEBUG] 2019-04-19 18:57:46.469 [main] DefaultDnsServerAddressStreamProvider - Default DNS servers: [/192.168.21.1:53] (sun.net.dns.ResolverConfiguration)
+[DEBUG] 2019-04-19 18:57:46.477 [main] NetUtil - -Djava.net.preferIPv4Stack: false
+[DEBUG] 2019-04-19 18:57:46.477 [main] NetUtil - -Djava.net.preferIPv6Addresses: false
+[DEBUG] 2019-04-19 18:57:46.478 [main] NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1)
+[DEBUG] 2019-04-19 18:57:46.479 [main] NetUtil - Failed to get SOMAXCONN from sysctl and file /proc/sys/net/core/somaxconn. Default: 128
+[DEBUG] 2019-04-19 18:57:46.623 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 8
+[DEBUG] 2019-04-19 18:57:46.624 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 8
+[DEBUG] 2019-04-19 18:57:46.624 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+[DEBUG] 2019-04-19 18:57:46.624 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+[DEBUG] 2019-04-19 18:57:46.624 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+[DEBUG] 2019-04-19 18:57:46.624 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+[DEBUG] 2019-04-19 18:57:46.624 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+[DEBUG] 2019-04-19 18:57:46.625 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+[DEBUG] 2019-04-19 18:57:46.625 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+[DEBUG] 2019-04-19 18:57:46.625 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+[DEBUG] 2019-04-19 18:57:46.625 [vert.x-eventloop-thread-0] PooledByteBufAllocator - -Dio.netty.allocator.useCacheForAllThreads: true
+[DEBUG] 2019-04-19 18:57:46.630 [vert.x-eventloop-thread-0] InternalThreadLocalMap - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+[DEBUG] 2019-04-19 18:57:46.631 [vert.x-eventloop-thread-0] InternalThreadLocalMap - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+[DEBUG] 2019-04-19 18:57:51.741 [vert.x-eventloop-thread-0] DefaultChannelId - -Dio.netty.processId: 51813 (auto-detected)
+[DEBUG] 2019-04-19 18:57:51.744 [vert.x-eventloop-thread-0] DefaultChannelId - -Dio.netty.machineId: 14:20:5e:ff:fe:08:2b:cc (auto-detected)
+[DEBUG] 2019-04-19 18:57:51.775 [vert.x-eventloop-thread-0] ByteBufUtil - -Dio.netty.allocator.type: pooled
+[DEBUG] 2019-04-19 18:57:51.775 [vert.x-eventloop-thread-0] ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 0
+[DEBUG] 2019-04-19 18:57:51.775 [vert.x-eventloop-thread-0] ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384

@@ -1,8 +1,8 @@
 Configuration:
-#  Properties:
-#    Property:
-#    - name: log-path
-#      value: }/logs
+  Properties:
+    Property:
+    - name: log-path
+      value: ${main:0}/logs
 
   Appenders:
     Console:
@@ -13,7 +13,7 @@ Configuration:
 
     RollingFile:
     - name: RollingFile_Appender
-      fileName: ${main:0}/rollingfile.log
+      fileName: ${log-path}/rollingfile.log
       filePattern: "logs/archive/rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz"
       PatternLayout:
         pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"

@@ -3,12 +3,8 @@ package org.mendora.verticle;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.ext.web.Router;
-import org.apache.logging.log4j.core.lookup.ContextMapLookup;
-import org.apache.logging.log4j.core.lookup.MainMapLookup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.mendora.LoggerApplication;
 
 /**
  * @author menfre
@@ -16,28 +12,27 @@ import java.util.Map;
  * date: 2019/4/18
  * desc:
  */
+@Slf4j
 public class WebVerticle extends AbstractVerticle {
-    private static Vertx VERTX;
-    private static Router ROUTER;
+	private static Vertx VERTX;
+	private static Router ROUTER;
 
-    @Override
-    public void start() throws Exception {
-        String root = PathUtil.root();
-        ROUTER = Router.router(VERTX);
-        System.setProperty("rootPath", root);
-        System.setProperty("log4j.configurationFile", root + "log4j2.yaml");
-        System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory");
-        ROUTER.get("/text").handler(rtx -> {
-            Logger log = LoggerFactory.getLogger(WebVerticle.class);
-            log.info("test");
-            rtx.response().end("999dsfdsf");
-        });
+	@Override
+	public void start() throws Exception {
+		ROUTER = Router.router(VERTX);
+		System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory");
+		ROUTER.get("/text").handler(rtx -> {
+			rtx.response().end("999dsfdsf");
+			log.info("ok");
+		});
 
-        VERTX.createHttpServer().requestHandler(ROUTER).listen(8080);
-    }
+		VERTX.createHttpServer().requestHandler(ROUTER).listen(8080);
+	}
 
-    public static void main(String[] args) {
-        VERTX = Vertx.vertx();
-        VERTX.deployVerticle(WebVerticle.class.getName());
-    }
+	public static void main(String[] args) {
+		String[] args2 = {"/Users/pundix043/workbench/copy/toolkit"};
+		LoggerApplication.run(args2);
+		VERTX = Vertx.vertx();
+		VERTX.deployVerticle(WebVerticle.class.getName());
+	}
 }

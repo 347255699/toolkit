@@ -10,6 +10,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>web</artifactId>
+
+    <dependencies>
+        <!-- mendora -->
+        <dependency>
+            <groupId>org.mendora</groupId>
+            <artifactId>util</artifactId>
+            <version>${mendora.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mendora</groupId>
+            <artifactId>logger</artifactId>
+            <version>${mendora.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
