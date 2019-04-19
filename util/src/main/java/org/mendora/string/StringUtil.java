@@ -1,4 +1,4 @@
-package org.mendora.util;
+package org.mendora.string;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,7 +63,7 @@ public class StringUtil {
      * @param str 带转换字符串
      * @return 转换完毕字符串
      */
-    public static String firstLetterToUpperCase(String str) {
+    public static String firstLetterUpper(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }

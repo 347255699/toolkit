@@ -3,11 +3,11 @@ package org.mendora.db.mysql;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mendora.bean.BeanUtil;
 import org.mendora.db.DbSources;
 import org.mendora.db.DbDriver;
 import org.mendora.db.TableDesc;
-import org.mendora.util.BeanUtil;
-import org.mendora.util.StringUtil;
+import org.mendora.string.StringUtil;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -82,7 +82,7 @@ public class JdbcDriver implements DbDriver<ResultSet> {
             while (rs.next()) {
                 final T t = tClass.newInstance();
                 // 填充
-                BeanUtil.filling(t, k -> rs.getString(StringUtil.firstLetterToUpperCase(k)));
+                BeanUtil.filling(t, k -> rs.getString(StringUtil.firstLetterUpper(k)));
                 objs.add(t);
             }
         }

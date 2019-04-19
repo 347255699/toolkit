@@ -5,7 +5,7 @@ import org.mendora.config.AnnotationConfig;
 import org.mendora.config.SysConfig;
 import org.mendora.db.TableDesc;
 import org.mendora.generate.base.AbstractPojoTypeSpec;
-import org.mendora.util.StringUtil;
+import org.mendora.string.StringUtil;
 
 import javax.lang.model.element.Modifier;
 import java.util.Comparator;
@@ -23,7 +23,7 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
     private void buildEnum(TableDesc td, TypeSpec.Builder pojoBuilder) {
         // 枚举名称
         String lowerCaseEnumName = StringUtil.lineToHump(td.field());
-        String upperCaseEnumName = StringUtil.firstLetterToUpperCase(lowerCaseEnumName);
+        String upperCaseEnumName = StringUtil.firstLetterUpper(lowerCaseEnumName);
 
         // 构造枚举
         TypeSpec.Builder enumBuilder = TypeSpec.enumBuilder(upperCaseEnumName)
@@ -100,7 +100,7 @@ public class PxPojoTypeSpec extends AbstractPojoTypeSpec {
 
             SysConfig.statusKeyword.forEach(keyword -> {
                 String javaField = StringUtil.lineToHump(td.field());
-                String keyword0 = StringUtil.firstLetterToUpperCase(keyword);
+                String keyword0 = StringUtil.firstLetterUpper(keyword);
                 if (javaField.equals(keyword) || javaField.contains(keyword0)) {
                     buildEnum(td, pojoBuilder);
                 }

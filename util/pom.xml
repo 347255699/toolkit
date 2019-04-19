@@ -9,29 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>generator</artifactId>
+    <artifactId>util</artifactId>
 
-    <dependencies>
-        <!-- mendora -->
-        <dependency>
-            <groupId>org.mendora</groupId>
-            <artifactId>util</artifactId>
-            <version>${mendora.version}</version>
-        </dependency>
-
-        <!-- tools -->
-        <dependency>
-            <groupId>com.squareup</groupId>
-            <artifactId>javapoet</artifactId>
-            <version>${javapoet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
-    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -44,5 +23,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

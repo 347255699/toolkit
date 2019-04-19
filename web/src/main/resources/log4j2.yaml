@@ -1,45 +1,36 @@
 Configuration:
-  status: warn
-  name: YAMLConfigTest
-  properties:
-    property:
-      name: filename
-      value: target/test-yaml.log
-  thresholdFilter:
-    level: debug
-  appenders:
-    Console:
-      name: STDOUT
-      PatternLayout:
-        Pattern: "%m%n"
-    File:
-      name: File
-      fileName: ${filename}
-      PatternLayout:
-        Pattern: "%d %p %C{1.} [%t] %m%n"
-      Filters:
-        ThresholdFilter:
-          level: error
+  Properties:
+    Property:
+    - name: root
+      value: ${sys:rootPath}logs
 
+  Appenders:
+    Console:
+      PatternLayout:
+        pattern: '%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n'
+      name: Console
+      target: SYSTEM_OUT
+    File:
+      PatternLayout:
+        pattern: '%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n'
+      name: File
+      fileName: ${root}logs/web.log
+
+#    RollingFile:
+#    - name: RollingFile_Appender
+#      fileName: ${root}/rollingfile.log
+#      filePattern: "logs/archive/rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz"
+#      PatternLayout:
+#        pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+#      Policies:
+#        SizeBasedTriggeringPolicy:
+#          size: 50 KB
+#      DefaultRollOverStrategy:
+#        max: 30
   Loggers:
-    logger:
-    -
-      name: org.apache.logging.log4j.test1
-      level: debug
-      additivity: false
-      ThreadContextMapFilter:
-        KeyValuePair:
-          key: test
-          value: 123
-      AppenderRef:
-        ref: STDOUT
-    -
-      name: org.apache.logging.log4j.test2
-      level: debug
-      additivity: false
-      AppenderRef:
-        ref: File
     Root:
-      level: error
       AppenderRef:
-        ref: STDOUT
+      - ref: Console
+      - ref: File
+      - ref: RollingFile_Appender
+      level: trace

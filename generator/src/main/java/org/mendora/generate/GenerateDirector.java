@@ -11,7 +11,7 @@ import org.mendora.generate.base.AbstractPojoTypeSpec;
 import org.mendora.generate.base.AbstractRepositoryImplTypeSpec;
 import org.mendora.generate.base.AbstractRepositoryInterfaceTypeSpec;
 import org.mendora.generate.base.TypeSpecFactory;
-import org.mendora.util.StringUtil;
+import org.mendora.string.StringUtil;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -61,7 +61,7 @@ public class GenerateDirector {
     }
 
     private String pojoClassName(String tableName) {
-        return StringUtil.firstLetterToUpperCase(StringUtil.lineToHump(tableName));
+        return StringUtil.firstLetterUpper(StringUtil.lineToHump(tableName));
     }
 
     private void buildPojo(List<String> tables, Map<String, List<TableDesc>> tableDescs) {

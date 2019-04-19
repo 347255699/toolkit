@@ -1,4 +1,4 @@
-package org.mendora.util;
+package org.mendora.bean;
 
 import lombok.extern.slf4j.Slf4j;
 
