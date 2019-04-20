@@ -29,6 +29,8 @@ public class WebModule {
 
     private static final int WORKER_POOL_ZISE = 10;
 
+    private int port;
+
     private Optional<Class<?>> classForName(String className) {
         try {
             return Optional.of(Class.forName(className));
@@ -71,7 +73,7 @@ public class WebModule {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-        WebVerticle webVerticle = new WebVerticle(routeFactories);
+        WebVerticle webVerticle = new WebVerticle(routeFactories, port);
         vertx.deployVerticle(webVerticle);
     }
 }

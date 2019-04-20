@@ -9,4 +9,5 @@ import java.lang.annotation.*;
 public @interface RequestRouting {
     String value();
     HttpMethod method() default HttpMethod.GET;
+    boolean blocked() default false;
 }
