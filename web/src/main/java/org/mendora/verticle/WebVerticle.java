@@ -70,13 +70,6 @@ public class WebVerticle extends AbstractVerticle {
                                     }
                                 });
                             }
-                            router.route(rootPath.concat(annotation.value())).method(annotation.method()).handler(rtx -> {
-                                try {
-                                    m.invoke(rf, rtx);
-                                } catch (Exception e) {
-                                    log.error("Please check the method:{} is normal.", m.getName());
-                                }
-                            });
                         });
             });
         }
