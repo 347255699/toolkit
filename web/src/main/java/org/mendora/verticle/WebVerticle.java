@@ -1,10 +1,18 @@
 package org.mendora.verticle;
 
 import io.vertx.reactivex.core.AbstractVerticle;
-import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.ext.web.Router;
+import io.vertx.reactivex.ext.web.handler.BodyHandler;
+import io.vertx.reactivex.ext.web.handler.LoggerHandler;
+import io.vertx.reactivex.ext.web.handler.StaticHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.mendora.LoggerApplication;
+import org.mendora.facade.RequestRouting;
+import org.mendora.facade.Route;
+import org.mendora.facade.RouteFactory;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author menfre
@@ -14,25 +22,48 @@ import org.mendora.LoggerApplication;
  */
 @Slf4j
 public class WebVerticle extends AbstractVerticle {
-	private static Vertx VERTX;
-	private static Router ROUTER;
+    private Router router;
+    private List<RouteFactory> routeFactories;
+    private int port;
+    private static final int DEFAULT_PORT = 8080;
 
-	@Override
-	public void start() throws Exception {
-		ROUTER = Router.router(VERTX);
-		System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory");
-		ROUTER.get("/text").handler(rtx -> {
-			rtx.response().end("999dsfdsf");
-			log.info("ok");
-		});
+    public WebVerticle(List<RouteFactory> routeFactories, int port) {
+        super();
+        this.routeFactories = routeFactories;
+        this.port = port;
+    }
 
-		VERTX.createHttpServer().requestHandler(ROUTER).listen(8080);
-	}
+    public WebVerticle(List<RouteFactory> routeFactories) {
+        super();
+        this.routeFactories = routeFactories;
+    }
 
-	public static void main(String[] args) {
-		String[] args2 = {"/Users/pundix043/workbench/copy/toolkit"};
-		LoggerApplication.run(args2);
-		VERTX = Vertx.vertx();
-		VERTX.deployVerticle(WebVerticle.class.getName());
-	}
+    @Override
+    public void start() throws Exception {
+        router = Router.router(vertx);
+        router.route().handler(LoggerHandler.create());
+        router.route("/html/*").handler(StaticHandler.create("static/").setCachingEnabled(false));
+        router.route().handler(BodyHandler.create());
+        if (routeFactories != null && routeFactories.size() > 0) {
+            routeFactories.forEach(rf -> {
+                String rootPath = rf.getClass().getAnnotation(Route.class).value();
+                Method[] declaredMethods = rf.getClass().getDeclaredMethods();
+                Arrays.stream(declaredMethods)
+                        .filter(m -> m.isAnnotationPresent(RequestRouting.class))
+                        .forEach(m -> {
+                            RequestRouting annotation = m.getAnnotation(RequestRouting.class);
+                            router.route(rootPath.concat(annotation.value())).method(annotation.method()).handler(rtx -> {
+                                try {
+                                    m.invoke(rf, rtx);
+                                } catch (Exception e) {
+                                    log.error("Please check the method:{} is normal.", m.getName());
+                                }
+                            });
+                        });
+            });
+        }
+        int port = this.port == 0 ? DEFAULT_PORT : this.port;
+        vertx.createHttpServer().requestHandler(router).listen(port);
+        log.info("web server listen at {} successfully.", port);
+    }
 }
