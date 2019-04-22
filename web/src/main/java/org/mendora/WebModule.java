@@ -20,7 +20,7 @@ public class WebModule {
 	public void run(Vertx vertx, String basePackageName) {
 		PackageScanner<RouteFactory> scanner = new PackageScannerImpl<>(basePackageName, WebModule.class.getClassLoader());
 		List<RouteFactory> routeFactories = scanner.newInstances(scanner.fullClassNames(RouteFactory.class.getName()), Route.class);
-		WebVerticle webVerticle = new WebVerticle(routeFactories, port == 0? 8080:port);
+		WebVerticle webVerticle = new WebVerticle(routeFactories, port == 0 ? 8080 : port);
 		DeploymentOptions deploymentOptions = new DeploymentOptions()
 			.setWorker(worker);
 		vertx.deployVerticle(webVerticle, deploymentOptions);
