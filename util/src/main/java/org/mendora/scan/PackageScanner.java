@@ -1,6 +1,7 @@
 
 package org.mendora.scan;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -25,4 +26,11 @@ public interface PackageScanner<T> {
      * @return
      */
     List<String> classNames();
+
+    /**
+     * 创建一组实例
+     *
+     * @return
+     */
+    List<T> newInstances(List<String> classNames, Class<? extends Annotation> annotationClasss);
 }

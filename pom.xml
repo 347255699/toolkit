@@ -13,6 +13,7 @@
         <module>web</module>
         <module>util</module>
         <module>logger</module>
+        <module>data-accesser</module>
     </modules>
     <properties>
         <vertx.version>3.7.0</vertx.version>
@@ -45,6 +46,12 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-mysql-postgresql-client</artifactId>
             <version>${vertx.version}</version>
         </dependency>
 

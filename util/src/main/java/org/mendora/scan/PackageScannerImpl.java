@@ -6,12 +6,15 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.stream.Collectors;
 
 /**
  * created by:xmf
@@ -37,6 +40,38 @@ public class PackageScannerImpl<T> implements PackageScanner<T> {
     @Override
     public List<String> classNames() {
         return classNames(packagePath, new ArrayList<>(), name -> name);
+    }
+
+    private Optional<Class<?>> classForName(String className) {
+        try {
+            return Optional.of(Class.forName(className));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    private Optional<T> newInstance(Class<?> clazz) {
+        try {
+            return Optional.of((T)clazz.newInstance());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<T> newInstances(List<String> classNames, Class<? extends Annotation> annotationClass) {
+        return classNames.stream()
+                .map(this::classForName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(clazz -> !clazz.isInterface() && !clazz.isEnum())
+                .filter(clazz -> clazz.isAnnotationPresent(annotationClass))
+                .map(this::newInstance)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     /**
