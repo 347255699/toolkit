@@ -1,9 +1,17 @@
 package org.mendora.scan;
 
 /**
- * Created by kam on 2018/2/4.
+ * 扫描过滤器
+ *
+ * @author menfre
  */
 @FunctionalInterface
 public interface ScannerFilter {
-    String filte(String fullyQualifiedName);
+	/**
+	 * 过滤动作
+	 *
+	 * @param fullyQualifiedName 过滤全限类名
+	 * @return 过滤后的名称
+	 */
+	boolean filter(String fullyQualifiedName);
 }

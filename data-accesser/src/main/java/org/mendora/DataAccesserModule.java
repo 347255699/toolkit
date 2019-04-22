@@ -24,7 +24,7 @@ public class DataAccesserModule {
 
     public Vertx run(Vertx vertx) {
         PackageScanner<DataAccesserFactory> scanner = new PackageScannerImpl<>(basePackageName, DataAccesserModule.class.getClassLoader());
-        List<DataAccesserFactory> dataAccesserFactories= scanner.newInstances(scanner.classNames(DataAccesserFactory.class.getName()), DataAccesser.class);
+        List<DataAccesserFactory> dataAccesserFactories= scanner.newInstances(scanner.fullClassNames(DataAccesserFactory.class.getName()), DataAccesser.class);
         DataAccesserVerticle dataAccesserVerticle = new DataAccesserVerticle(username, password, host, database, dataAccesserFactories);
         vertx.deployVerticle(dataAccesserVerticle);
         return vertx;
