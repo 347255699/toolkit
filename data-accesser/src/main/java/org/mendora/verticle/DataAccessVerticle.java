@@ -7,15 +7,18 @@ import io.vertx.reactivex.ext.sql.SQLClient;
 import io.vertx.reactivex.ext.sql.SQLConnection;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.mendora.facade.DataAccesserFactory;
+import org.mendora.facade.DataAccessFactory;
 import org.mendora.facade.DataAccessing;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author menfre
+ */
 @Slf4j
-public class DataAccesserVerticle extends AbstractVerticle {
+public class DataAccessVerticle extends AbstractVerticle {
     private String username;
 
     private String password;
@@ -26,9 +29,9 @@ public class DataAccesserVerticle extends AbstractVerticle {
 
     private SQLClient mySQLClient;
 
-    private List<DataAccesserFactory> dataAccesserFactories;
+    private List<DataAccessFactory> dataAccessFactories;
 
-    private void invokeMethod(DataAccesserFactory daf, Method m, SQLConnection conn) {
+    private void invokeMethod(DataAccessFactory daf, Method m, SQLConnection conn) {
         try {
             m.invoke(daf, conn);
         } catch (Exception e) {
@@ -38,12 +41,30 @@ public class DataAccesserVerticle extends AbstractVerticle {
         }
     }
 
-    public DataAccesserVerticle(String username, String password, String host, String database, List<DataAccesserFactory> dataAccesserFactories) {
+    public DataAccessVerticle(String username, String password, String host, String database, List<DataAccessFactory> dataAccessFactories) {
         this.username = username;
         this.password = password;
         this.host = host;
         this.database = database;
-        this.dataAccesserFactories = dataAccesserFactories;
+        this.dataAccessFactories = dataAccessFactories;
+    }
+
+    private void methodHandler(DataAccessFactory daf, Method m){
+        DataAccessing annotation = m.getAnnotation(DataAccessing.class);
+        mySQLClient.getConnection(res -> {
+            if (res.succeeded()) {
+                SQLConnection conn = res.result();
+                conn.setAutoCommit(annotation.autoCommit(), res0 -> {
+                    if (res0.succeeded()) {
+                        invokeMethod(daf, m, conn);
+                    } else {
+                        log.error("into method: {}, setting auto commit failed.", m.getName());
+                    }
+                });
+            } else {
+                log.error("into method: {}, get sql connection failed.", m.getName());
+            }
+        });
     }
 
     @Override
@@ -52,29 +73,15 @@ public class DataAccesserVerticle extends AbstractVerticle {
                 .put("username", StringUtils.isEmpty(username) ? "root" : username)
                 .put("password", StringUtils.isEmpty(password) ? "123456" : password)
                 .put("host", StringUtils.isEmpty(host) ? "localhost" : host)
-                .put("database", StringUtils.isEmpty(database) ? "data_accesser" : database);
+                .put("database", StringUtils.isEmpty(database) ? "data_access" : database);
         mySQLClient = MySQLClient.createShared(vertx, mySQLClientConfig);
-        if (dataAccesserFactories != null && dataAccesserFactories.size() > 0) {
-            dataAccesserFactories.forEach(daf -> {
+        if (dataAccessFactories != null && dataAccessFactories.size() > 0) {
+            dataAccessFactories.forEach(daf -> {
                 Method[] methods = daf.getClass().getMethods();
                 Arrays.stream(methods)
                         .filter(m -> m.isAnnotationPresent(DataAccessing.class))
                         .forEach(m -> {
-                            DataAccessing annotation = m.getAnnotation(DataAccessing.class);
-                            mySQLClient.getConnection(res -> {
-                                if (res.succeeded()) {
-                                    SQLConnection conn = res.result();
-                                    conn.setAutoCommit(annotation.autoCommit(), res0 -> {
-                                        if (res0.succeeded()) {
-                                            invokeMethod(daf, m, conn);
-                                        } else {
-                                            log.error("into method: {}, setting auto commit failed.", m.getName());
-                                        }
-                                    });
-                                } else {
-                                    log.error("into method: {}, get sql connection failed.", m.getName());
-                                }
-                            });
+
                         });
             });
         }

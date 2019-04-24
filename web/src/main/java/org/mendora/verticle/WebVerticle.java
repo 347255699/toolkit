@@ -68,11 +68,11 @@ public class WebVerticle extends AbstractVerticle {
 			HttpServerResponse response = rxt.response();
 			String path = request.path();
 			String fileName = path.substring(path.indexOf("/html/"));
-			String absoluteFileName = webRoot + fileName;
+			String absoluteFileName = webRoot.concat(fileName);
 			try {
 				File file = new File(absoluteFileName);
 				if (!file.exists()) {
-					Resp resp = new Resp<>(404, null, "");
+					Resp resp = new Resp<>(404, null, "resources not found.");
 					response.end(JsonObject.mapFrom(resp).toString());
 				}
 				ByteBuffer bf = ByteBuffer.allocate((int) file.length());
