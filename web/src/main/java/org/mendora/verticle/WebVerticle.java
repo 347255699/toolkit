@@ -1,7 +1,9 @@
 package org.mendora.verticle;
 
+import io.vertx.core.Handler;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.ext.web.Router;
+import io.vertx.reactivex.ext.web.RoutingContext;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
 import io.vertx.reactivex.ext.web.handler.LoggerHandler;
 import io.vertx.reactivex.ext.web.handler.StaticHandler;
@@ -32,6 +34,24 @@ public class WebVerticle extends AbstractVerticle {
 		this.port = port;
 	}
 
+	private void handleRoute(RouteFactory rf, Method m){
+        String rootPath = rf.getClass().getAnnotation(Route.class).value();
+        RequestRouting annotation = m.getAnnotation(RequestRouting.class);
+        io.vertx.reactivex.ext.web.Route route = router.route(rootPath.concat(annotation.value())).method(annotation.method());
+        Handler<RoutingContext> requestHandler = rtx -> {
+            try {
+                m.invoke(rf, rtx);
+            } catch (Exception e) {
+                log.error("Please check the method:{} is normal.", m.getName());
+            }
+        };
+        if (annotation.blocked()) {
+            route.blockingHandler(requestHandler);
+        } else {
+            route.handler(requestHandler);
+        }
+    }
+
 	@Override
 	public void start() throws Exception {
 		router = Router.router(vertx);
@@ -44,31 +64,10 @@ public class WebVerticle extends AbstractVerticle {
 		router.route().handler(bodyHandler);
 		if (routeFactories != null && routeFactories.size() > 0) {
 			routeFactories.forEach(rf -> {
-				String rootPath = rf.getClass().getAnnotation(Route.class).value();
 				Method[] declaredMethods = rf.getClass().getDeclaredMethods();
 				Arrays.stream(declaredMethods)
 					.filter(m -> m.isAnnotationPresent(RequestRouting.class))
-					.forEach(m -> {
-						RequestRouting annotation = m.getAnnotation(RequestRouting.class);
-						io.vertx.reactivex.ext.web.Route route = router.route(rootPath.concat(annotation.value())).method(annotation.method());
-						if (annotation.blocked()) {
-							route.blockingHandler(rtx -> {
-								try {
-									m.invoke(rf, rtx);
-								} catch (Exception e) {
-									log.error("Please check the method:{} is normal.", m.getName());
-								}
-							});
-						} else {
-							route.handler(rtx -> {
-								try {
-									m.invoke(rf, rtx);
-								} catch (Exception e) {
-									log.error("Please check the method:{} is normal.", m.getName());
-								}
-							});
-						}
-					});
+					.forEach(m -> handleRoute(rf, m));
 			});
 		}
 		vertx.createHttpServer().requestHandler(router).listen(port);
