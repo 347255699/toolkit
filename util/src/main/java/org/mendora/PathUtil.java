@@ -11,8 +11,8 @@ public class PathUtil {
 	 *
 	 * @return 根目录路径
 	 */
-	public static String root() {
-		String path = PathUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+	public static String root(Class<?> clazz) {
+		String path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
 		return path.substring(0, path.length() - 1);
 	}
 }

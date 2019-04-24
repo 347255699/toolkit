@@ -6,7 +6,7 @@ import org.mendora.facade.DataAccesser;
 import org.mendora.facade.DataAccesserFactory;
 import org.mendora.scan.PackageScanner;
 import org.mendora.scan.PackageScannerImpl;
-import org.mendora.verticle.DataAccesserVerticle;
+import org.mendora.verticle.DataAccessVerticle;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class DataAccesserModule {
     public Vertx run(Vertx vertx) {
         PackageScanner<DataAccesserFactory> scanner = new PackageScannerImpl<>(basePackageName, DataAccesserModule.class.getClassLoader());
         List<DataAccesserFactory> dataAccesserFactories= scanner.newInstances(scanner.fullClassNames(DataAccesserFactory.class.getName()), DataAccesser.class);
-        DataAccesserVerticle dataAccesserVerticle = new DataAccesserVerticle(username, password, host, database, dataAccesserFactories);
+        DataAccessVerticle dataAccesserVerticle = new DataAccessVerticle(username, password, host, database, dataAccesserFactories);
         vertx.deployVerticle(dataAccesserVerticle);
         return vertx;
     }

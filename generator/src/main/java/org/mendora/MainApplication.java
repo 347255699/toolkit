@@ -19,10 +19,10 @@ import java.nio.channels.FileChannel;
 @Slf4j
 public class MainApplication {
 
-    private static final String DEFAULT_FILE = "config.json";
+    private static final String DEFAULT_FILE = "/config.json";
 
     private static void loadConfig() throws Exception {
-        RandomAccessFile file = new RandomAccessFile(PathUtil.root() + DEFAULT_FILE, "r");
+        RandomAccessFile file = new RandomAccessFile(PathUtil.root(MainApplication.class) + DEFAULT_FILE, "r");
         FileChannel channel = file.getChannel();
         ByteBuffer bb = ByteBuffer.allocate(4096);
         channel.read(bb);

@@ -15,7 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class DataAccesserVerticle extends AbstractVerticle {
+public class DataAccessVerticle extends AbstractVerticle {
+
     private String username;
 
     private String password;
@@ -24,7 +25,7 @@ public class DataAccesserVerticle extends AbstractVerticle {
 
     private String database;
 
-    private SQLClient mySQLClient;
+    public static SQLClient MYSQL_CLIENT;
 
     private List<DataAccesserFactory> dataAccesserFactories;
 
@@ -38,7 +39,7 @@ public class DataAccesserVerticle extends AbstractVerticle {
         }
     }
 
-    public DataAccesserVerticle(String username, String password, String host, String database, List<DataAccesserFactory> dataAccesserFactories) {
+    public DataAccessVerticle(String username, String password, String host, String database, List<DataAccesserFactory> dataAccesserFactories) {
         this.username = username;
         this.password = password;
         this.host = host;
@@ -53,31 +54,7 @@ public class DataAccesserVerticle extends AbstractVerticle {
                 .put("password", StringUtils.isEmpty(password) ? "123456" : password)
                 .put("host", StringUtils.isEmpty(host) ? "localhost" : host)
                 .put("database", StringUtils.isEmpty(database) ? "data_accesser" : database);
-        mySQLClient = MySQLClient.createShared(vertx, mySQLClientConfig);
-        if (dataAccesserFactories != null && dataAccesserFactories.size() > 0) {
-            dataAccesserFactories.forEach(daf -> {
-                Method[] methods = daf.getClass().getMethods();
-                Arrays.stream(methods)
-                        .filter(m -> m.isAnnotationPresent(DataAccessing.class))
-                        .forEach(m -> {
-                            DataAccessing annotation = m.getAnnotation(DataAccessing.class);
-                            mySQLClient.getConnection(res -> {
-                                if (res.succeeded()) {
-                                    SQLConnection conn = res.result();
-                                    conn.setAutoCommit(annotation.autoCommit(), res0 -> {
-                                        if (res0.succeeded()) {
-                                            invokeMethod(daf, m, conn);
-                                        } else {
-                                            log.error("into method: {}, setting auto commit failed.", m.getName());
-                                        }
-                                    });
-                                } else {
-                                    log.error("into method: {}, get sql connection failed.", m.getName());
-                                }
-                            });
-                        });
-            });
-        }
+        MYSQL_CLIENT = MySQLClient.createShared(vertx, mySQLClientConfig);
     }
 
     @Override

@@ -14,7 +14,7 @@
       "user": "root",
       "password": "menfre123",
       "url": "jdbc:mysql://localhost:3306/demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
-      "enable": true
+      "enable": false
     },
     {
       "name": "pundix-service-platform",
@@ -30,6 +30,14 @@
       "user": "root",
       "password": "wokoworks002",
       "url": "jdbc:mysql://localhost:3306/pundix_service_mining?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
+      "enable": false
+    },
+    {
+      "name": "pundix-service-platform2",
+      "driverClass": "com.mysql.cj.jdbc.Driver",
+      "user": "root",
+      "password": "123456",
+      "url": "jdbc:mysql://localhost:3306/Demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": true
     }
   ],
@@ -45,7 +53,8 @@
     }
   ],
   "table": [
-    "user"
+    "admin",
+    "platform"
   ],
   "annotationConfig": [
     {
