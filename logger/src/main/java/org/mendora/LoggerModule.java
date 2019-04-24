@@ -37,6 +37,8 @@ public class LoggerModule {
 
 	private static final int MAX_ROLLING_FILE_BOUND = 30;
 
+	private boolean rollingFile;
+
 	private Configuration buildConfiguration() {
 		ConfigurationBuilder<BuiltConfiguration> configurationBuilder = ConfigurationBuilderFactory.newConfigurationBuilder();
 
@@ -50,31 +52,36 @@ public class LoggerModule {
 			.addAttribute("target", "SYSTEM_OUT");
 		configurationBuilder.add(consoleAppenderBuilder);
 
-		// building rolling file appender
-		ComponentBuilder sizeBasedTriggeringPolicy = configurationBuilder.newComponent("SizeBasedTriggeringPolicy")
-			.addAttribute("size", StringUtils.isEmpty(rollingSize) ? ROLLING_SIZE : rollingSize);
-		ComponentBuilder policiesBuilder = configurationBuilder.newComponent("Policies")
-			.addComponent(sizeBasedTriggeringPolicy);
-		ComponentBuilder defaultRollOverStrategyBuilder = configurationBuilder.newComponent("DefaultRollOverStrategy")
-			.addAttribute("max", maxRollingFileBound == 0 ? MAX_ROLLING_FILE_BOUND : maxRollingFileBound);
-		AppenderComponentBuilder rollingFileAppenderBuilder = configurationBuilder.newAppender("rolling", "RollingFile")
-			.addAttribute("fileName", StringUtils.isEmpty(logFileName) ? LOG_FILE_NAME : logFileName)
-			.add(standardLayoutBuilder)
-			.addComponent(policiesBuilder)
-			.addComponent(defaultRollOverStrategyBuilder);
-		if (StringUtils.isNoneEmpty(logFilePattern)) {
-			rollingFileAppenderBuilder.addAttribute("filePattern", logFilePattern);
-		} else if (StringUtils.isNoneEmpty(logFileName)) {
-			rollingFileAppenderBuilder.addAttribute("filePattern", logFileName + ".%d{yyyy-MM-dd-hh-mm}.gz");
-		} else {
-			rollingFileAppenderBuilder.addAttribute("filePattern", LOG_FILE_NAME + ".%d{yyyy-MM-dd-hh-mm}.gz");
+		if (rollingFile) {
+			// building rolling file appender
+			ComponentBuilder sizeBasedTriggeringPolicy = configurationBuilder.newComponent("SizeBasedTriggeringPolicy")
+				.addAttribute("size", StringUtils.isEmpty(rollingSize) ? ROLLING_SIZE : rollingSize);
+			ComponentBuilder policiesBuilder = configurationBuilder.newComponent("Policies")
+				.addComponent(sizeBasedTriggeringPolicy);
+			ComponentBuilder defaultRollOverStrategyBuilder = configurationBuilder.newComponent("DefaultRollOverStrategy")
+				.addAttribute("max", maxRollingFileBound == 0 ? MAX_ROLLING_FILE_BOUND : maxRollingFileBound);
+			AppenderComponentBuilder rollingFileAppenderBuilder = configurationBuilder.newAppender("rolling", "RollingFile")
+				.addAttribute("fileName", StringUtils.isEmpty(logFileName) ? LOG_FILE_NAME : logFileName)
+				.add(standardLayoutBuilder)
+				.addComponent(policiesBuilder)
+				.addComponent(defaultRollOverStrategyBuilder);
+			if (StringUtils.isNoneEmpty(logFilePattern)) {
+				rollingFileAppenderBuilder.addAttribute("filePattern", logFilePattern);
+			} else if (StringUtils.isNoneEmpty(logFileName)) {
+				rollingFileAppenderBuilder.addAttribute("filePattern", logFileName + ".%d{yyyy-MM-dd-hh-mm}.gz");
+			} else {
+				rollingFileAppenderBuilder.addAttribute("filePattern", LOG_FILE_NAME + ".%d{yyyy-MM-dd-hh-mm}.gz");
+			}
+			configurationBuilder.add(rollingFileAppenderBuilder);
 		}
-		configurationBuilder.add(rollingFileAppenderBuilder);
 
 		// building root logger
 		RootLoggerComponentBuilder rootLogger = configurationBuilder.newRootLogger(logLevel == null ? Level.INFO : logLevel)
-			.add(configurationBuilder.newAppenderRef("stdout"))
-			.add(configurationBuilder.newAppenderRef("rolling"));
+			.add(configurationBuilder.newAppenderRef("stdout"));
+
+		if (rollingFile) {
+			rootLogger.add(configurationBuilder.newAppenderRef("rolling"));
+		}
 
 		return configurationBuilder.add(rootLogger).build();
 	}
