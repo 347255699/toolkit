@@ -15,8 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class DataAccessVerticle extends AbstractVerticle {
-
+public class DataAccesserVerticle extends AbstractVerticle {
     private String username;
 
     private String password;
