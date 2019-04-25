@@ -13,7 +13,7 @@
         <module>web</module>
         <module>util</module>
         <module>logger</module>
-        <module>data-accesser</module>
+        <module>data-access</module>
     </modules>
     <properties>
         <vertx.version>3.7.0</vertx.version>
