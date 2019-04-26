@@ -1,5 +1,6 @@
 package org.mendora;
 
+import io.vertx.core.DeploymentOptions;
 import io.vertx.reactivex.core.Vertx;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ public class DataAccessModule {
 
     private String uri;
 
+    private boolean worker;
+
     private static final String URI_MARK = "?";
 
     public void run(Vertx vertx) {
@@ -29,9 +32,8 @@ public class DataAccessModule {
             database = temp.substring(temp.indexOf("/") + 1);
         }
         DataAccessVerticle dataAccessVerticle = new DataAccessVerticle(username, password, host, database);
-        String result = vertx.rxDeployVerticle(dataAccessVerticle)
-                .blockingGet();
-        log.info(result);
-        vertx.deployVerticle(dataAccessVerticle);
+        DeploymentOptions deploymentOptions = new DeploymentOptions()
+            .setWorker(worker);
+        vertx.rxDeployVerticle(dataAccessVerticle, deploymentOptions).blockingGet();
     }
 }

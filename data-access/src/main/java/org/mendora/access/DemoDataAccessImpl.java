@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+/**
+ * @author menfre
+ */
 @Slf4j
 public class DemoDataAccessImpl implements DemoDataAccess {
     @Override

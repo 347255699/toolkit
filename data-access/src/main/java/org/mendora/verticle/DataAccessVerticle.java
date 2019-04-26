@@ -7,6 +7,9 @@ import io.vertx.reactivex.ext.sql.SQLClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * @author menfre
+ */
 @Slf4j
 public class DataAccessVerticle extends AbstractVerticle {
     private String username;

@@ -27,6 +27,7 @@
         <yaml.version>2.9.8</yaml.version>
         <mendora.version>1.0-SNAPSHOT</mendora.version>
         <lang3.version>3.9</lang3.version>
+        <jsoup.version>1.11.3</jsoup.version>
     </properties>
 
     <dependencies>
@@ -52,6 +53,12 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-mysql-postgresql-client</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-client</artifactId>
             <version>${vertx.version}</version>
         </dependency>
 
@@ -91,6 +98,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
     </dependencies>
 </project>
