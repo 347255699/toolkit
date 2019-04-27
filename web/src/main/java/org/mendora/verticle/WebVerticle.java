@@ -67,7 +67,7 @@ public class WebVerticle extends AbstractVerticle {
 			HttpServerRequest request = rxt.request();
 			HttpServerResponse response = rxt.response();
 			String path = request.path();
-			String fileName = path.substring(path.indexOf("/html/"));
+			String fileName = path.substring(path.indexOf("/html/") + 5);
 			String absoluteFileName = webRoot.concat(fileName);
 			try {
 				File file = new File(absoluteFileName);
