@@ -2,6 +2,9 @@ package org.mendora.generate.base;
 
 import com.squareup.javapoet.TypeSpec;
 import lombok.Data;
+import org.mendora.db.TableDesc;
+
+import java.util.List;
 
 /**
  * @author menfre
@@ -18,6 +21,8 @@ public abstract class AbstractRepositoryInterfaceTypeSpec implements BaseTypeSpe
     public String fullPojoClassName;
 
     public String keyType;
+
+    public List<TableDesc> tableDescs;
     
     public abstract TypeSpec generate();
 }

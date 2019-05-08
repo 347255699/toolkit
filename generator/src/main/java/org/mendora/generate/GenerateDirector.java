@@ -85,7 +85,7 @@ public class GenerateDirector {
                 });
     }
 
-    private void buildRepositoryInterface(List<String> tables) {
+    private void buildRepositoryInterface(List<String> tables, Map<String, List<TableDesc>> tableDescs) {
         tables.stream()
                 .map(t -> {
                     AbstractRepositoryInterfaceTypeSpec abstractRepositoryInterfaceTypeSpec = typeSpecFactory.repositoryInterfaceTypeSpec();
@@ -94,6 +94,7 @@ public class GenerateDirector {
                     abstractRepositoryInterfaceTypeSpec.setFullPojoClassName(classConfig.getBasePackage() + ".vo." + pojoClassName(t));
                     abstractRepositoryInterfaceTypeSpec.setKeyType(classConfig.getPrimaryKey());
                     abstractRepositoryInterfaceTypeSpec.setInterfaceName(pojoClassName(t) + "Repository");
+                    abstractRepositoryInterfaceTypeSpec.setTableDescs(tableDescs.get(t));
                     return abstractRepositoryInterfaceTypeSpec.generate();
                 })
                 .map(typeSpec -> JavaFile.builder(classConfig.getBasePackage() + ".repository", typeSpec).build())
@@ -157,7 +158,7 @@ public class GenerateDirector {
         final Map<String, List<TableDesc>> tableDescs = dbDirector.tableDesc(tables);
 
         // 构建repository接口
-        buildRepositoryInterface(tables);
+        buildRepositoryInterface(tables, tableDescs);
 
         // 构建repository实现
         buildRepositoryImpl(tables);

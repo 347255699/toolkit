@@ -38,6 +38,14 @@
       "user": "root",
       "password": "123456",
       "url": "jdbc:mysql://localhost:3306/Demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
+      "enable": false
+    },
+    {
+      "name": "pundix-service-platform3",
+      "driverClass": "com.mysql.cj.jdbc.Driver",
+      "user": "root",
+      "password": "123456",
+      "url": "jdbc:mysql://192.168.20.91:3306/pundix_service_platform?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": true
     }
   ],
@@ -53,8 +61,9 @@
     }
   ],
   "table": [
-    "admin",
-    "platform"
+    "platform_app",
+    "platform_card_app",
+    "platform_call_back_notify_record"
   ],
   "annotationConfig": [
     {
