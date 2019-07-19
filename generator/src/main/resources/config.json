@@ -37,7 +37,7 @@
       "driverClass": "com.mysql.cj.jdbc.Driver",
       "user": "root",
       "password": "123456",
-      "url": "jdbc:mysql://localhost:3306/Demo?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
+      "url": "jdbc:mysql://localhost:3306/pundix_service_platform?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": false
     },
     {
@@ -47,6 +47,14 @@
       "password": "123456",
       "url": "jdbc:mysql://192.168.20.91:3306/pundix_service_platform?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
       "enable": true
+    },
+    {
+      "name": "pundix-service-task",
+      "driverClass": "com.mysql.cj.jdbc.Driver",
+      "user": "root",
+      "password": "123456",
+      "url": "jdbc:mysql://192.168.20.91:3306/pundix_service_task?cachePrepStmts=true&useUnicode=true&characterEncoding=utf8",
+      "enable": false
     }
   ],
   "classConfig": [
@@ -61,9 +69,8 @@
     }
   ],
   "table": [
-    "platform_app",
-    "platform_card_app",
-    "platform_call_back_notify_record"
+   "currency",
+    "platform"
   ],
   "annotationConfig": [
     {
@@ -97,7 +104,8 @@
   ],
   "statusKeyword": [
     "type",
-    "status"
+    "status",
+    "checked"
   ],
   "targetPath": "/Users/menfre/Desktop/generate"
 }
