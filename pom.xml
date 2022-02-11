@@ -16,7 +16,7 @@
         <module>data-access</module>
     </modules>
     <properties>
-        <vertx.version>3.7.0</vertx.version>
+        <vertx.version>3.9.4</vertx.version>
         <log4j.version>2.11.2</log4j.version>
         <rxjava.version>2.2.8</rxjava.version>
         <sl4j.version>1.7.26</sl4j.version>
