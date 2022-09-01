@@ -27,7 +27,7 @@
         <yaml.version>2.9.8</yaml.version>
         <mendora.version>1.0-SNAPSHOT</mendora.version>
         <lang3.version>3.9</lang3.version>
-        <jsoup.version>1.11.3</jsoup.version>
+        <jsoup.version>1.15.3</jsoup.version>
         <commons-codec.version>1.12</commons-codec.version>
     </properties>
 
